@@ -169,6 +169,46 @@ fn p1_sol7() -> u64 {
          .next().unwrap_or(0)
 }
 
+fn p1_sol8() -> u64 {
+    // overload index
+    // index has side-effect, it's bad :P
+
+    use std::ops::{Index, IndexMut};
+
+    struct Euler {
+        s: u64,
+        v: u64,
+    }
+
+    impl Index<u64> for Euler {
+        type Output = u64;
+
+        fn index(&self, _index: u64) -> &u64 {
+            &self.s
+        }
+    }
+
+    impl IndexMut<u64> for Euler {
+        fn index_mut(&mut self, _index: u64) -> &mut u64 {
+            let v = self.v;
+            let s = self.s;
+            let v = v + 1;
+            let s = s + ((v % 3) * (v % 5) < 1) as u64 * v;
+            self.v = v;
+            self.s = s;
+            &mut self.s
+        }
+    }
+
+    let mut euler = Euler { s: 0, v: 0 };
+
+    for _ in 1..1000 {
+        &mut euler[0];
+    }
+
+    euler[0]
+}
+
 fn main() {
     // sum of all the multiples of 3 or 5 below 1000
     // ans : 233168
@@ -179,4 +219,5 @@ fn main() {
     println!("p1_sol5 : {}", p1_sol5());
     println!("p1_sol6 : {}", p1_sol6());
     println!("p1_sol7 : {}", p1_sol7());
+    println!("p1_sol8 : {}", p1_sol8());
 }
