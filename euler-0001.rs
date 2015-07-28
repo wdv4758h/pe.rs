@@ -140,6 +140,35 @@ fn p1_sol6() -> u64 {
     result
 }
 
+fn p1_sol7() -> u64 {
+    // iterator
+
+    struct Euler {
+        s: u64,
+        v: u64,
+    }
+
+    impl Iterator for Euler {
+        type Item = u64;
+
+        fn next(&mut self) -> Option<u64> {
+            let s = self.s;
+            let v = self.v;
+            let s = s + ((v % 3) * (v % 5) < 1) as u64 * v;
+            let v = v + 1;
+            self.s = s;
+            self.v = v;
+
+            Some(self.s)
+        }
+    }
+
+    let euler = Euler { s: 0, v: 0 };
+
+    euler.skip(1000-1)
+         .next().unwrap_or(0)
+}
+
 fn main() {
     // sum of all the multiples of 3 or 5 below 1000
     // ans : 233168
@@ -149,4 +178,5 @@ fn main() {
     println!("p1_sol4 : {}", p1_sol4());
     println!("p1_sol5 : {}", p1_sol5());
     println!("p1_sol6 : {}", p1_sol6());
+    println!("p1_sol7 : {}", p1_sol7());
 }
