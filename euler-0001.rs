@@ -115,6 +115,31 @@ fn p1_sol5() -> u64 {
     s
 }
 
+fn p1_sol6() -> u64 {
+    // static variable
+
+    fn f() -> u64 {
+        static mut s: u64 = 0;
+        static mut v: u64 = 0;
+
+        // static mut is unsafe
+        unsafe {
+            v = v + 1;
+            s = s + ((v % 3) * (v % 5) < 1) as u64 * v;
+
+            s
+        }
+    }
+
+    let mut result = 0;
+
+    for _ in 1..1000 {
+        result = f();
+    }
+
+    result
+}
+
 fn main() {
     // sum of all the multiples of 3 or 5 below 1000
     // ans : 233168
@@ -123,4 +148,5 @@ fn main() {
     println!("p1_sol3 : {}", p1_sol3());
     println!("p1_sol4 : {}", p1_sol4());
     println!("p1_sol5 : {}", p1_sol5());
+    println!("p1_sol6 : {}", p1_sol6());
 }
