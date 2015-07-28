@@ -93,6 +93,28 @@ fn p1_sol4() -> u64 {
     sum_multiples_of_base_below!(OωO 3, 5 OωO, 1, 1000)
 }
 
+fn p1_sol5() -> u64 {
+    // closure
+
+    let mut s = 0;
+    let mut v = 0;
+
+    {
+        // only borrow in this scope
+
+        let mut f = || {
+            v = v + 1;
+            s = s + ((v % 3) * (v % 5) < 1) as u64 * v;
+        };
+
+        for _ in 1..1000 {
+            f();
+        }
+    }
+
+    s
+}
+
 fn main() {
     // sum of all the multiples of 3 or 5 below 1000
     // ans : 233168
@@ -100,4 +122,5 @@ fn main() {
     println!("p1_sol2 : {}", p1_sol2());
     println!("p1_sol3 : {}", p1_sol3());
     println!("p1_sol4 : {}", p1_sol4());
+    println!("p1_sol5 : {}", p1_sol5());
 }
